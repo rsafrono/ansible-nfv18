@@ -1,11 +1,21 @@
 ---
 
 # Ensure that undercloud contains all required packages to interact with cloud
-- hosts: undercloud
+- hosts: localhost
+  gather_facts: False
+  vars:
+    cloud_resources: external
   tasks:
-    - import_role:
+    - name: Prepare Virtual Environment
+      include_role:
         name: roles/post_install/openstack_tasks
         tasks_from: setup_openstack_env
+      when: manual_run | bool
+
+    - name: Add Pre-existing Instances To Dynamic Inventory
+      include_role:
+        name: roles/post_install/dynamic_host_inventory
+      loop: "{{ dynamic_instances }}"
 
 - hosts: "{{ dut_compute | default(omit) }}"
   become: true

@@ -28,7 +28,7 @@
   block:
     - name: Get network ports
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.port_info:
         cloud: "{{ cloud_name }}"
       register: network_ports

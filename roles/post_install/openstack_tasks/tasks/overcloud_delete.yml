@@ -12,7 +12,7 @@
 # TODO: Once fixed, remove this.
 - name: Delete Overcloud stack OSP < 17
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   openstack.cloud.stack:
     cloud: "{{ cloud_name }}"
     name: "{{ overcloud_name | default('overcloud') }}"
@@ -51,7 +51,7 @@
 
 - name: Delete symlink to the template base folder
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   file:
     path: '/home/stack/__oc_templates_folder'
     state: absent

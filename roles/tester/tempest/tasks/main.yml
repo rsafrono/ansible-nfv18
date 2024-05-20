@@ -25,7 +25,7 @@
 
 - name: Get the external network id
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   openstack.cloud.networks_info:
     cloud: "{{ cloud_name }}"
     validate_certs: "{{ validate_certs| default (omit) }}"
@@ -44,7 +44,7 @@
 
 - name: Check for the specific flavor id if it's required
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   openstack.cloud.compute_flavor_info:
     cloud: "{{ cloud_name }}"
     validate_certs: "{{ validate_certs | default (omit) }}"

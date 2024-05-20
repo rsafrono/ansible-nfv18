@@ -9,7 +9,7 @@
   block:
     - name: Create networks
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.network:
         cloud: "{{ item.cloud_name | default(cloud_name) }}"
         name: "{{ item.name }}"
@@ -25,7 +25,7 @@
 
     - name: Create subnets
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.subnet:
         cloud: "{{ item.cloud_name | default(cloud_name) }}"
         name: "{{ item.name }}_subnet"
@@ -44,7 +44,7 @@
 
     - name: Create router and set router gateway
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.router:
         cloud: "{{ item.cloud_name | default(cloud_name) }}"
         name: "{{ item.router_name }}"
@@ -90,7 +90,7 @@
 
     - name: Create router if required and set router interfaces
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.router:
         cloud: "{{ cloud_name }}"
         name: "{{ item.0.0 }}"
@@ -102,7 +102,7 @@
 
     - name: Create network ports
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.port:
         cloud: "{{ item.0.cloud_name | default(cloud_name) }}"
         name: "{{ item.1.name }}"
@@ -123,7 +123,7 @@
   block:
     - name: Delete network ports
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.port:
         cloud: "{{ item.0.cloud_name | default(cloud_name) }}"
         name: "{{ item.1.name }}"
@@ -148,7 +148,7 @@
 
     - name: Delete router
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.router:
         cloud: "{{ item.cloud_name | default(cloud_name) }}"
         name: "{{ item.router_name }}"
@@ -161,7 +161,7 @@
 
     - name: Delete networks
       vars:
-        ansible_python_interpreter: "{{ venv_path }}/bin/python"
+        ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
       openstack.cloud.network:
         cloud: "{{ item.cloud_name | default(cloud_name) }}"
         name: "{{ item.name }}"

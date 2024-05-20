@@ -2,7 +2,7 @@
 
 - name: "Instances {{ resource_state }}"
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
     all_instances: '{{ instances | default([]) }} + {{ generated_dynamic_instances | default([]) }}'
   openstack.cloud.server:
     state: "{{ resource_state }}"
@@ -34,7 +34,7 @@
 
 - name: Add floating IP to an instance
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
     all_instances: '{{ instances | default([]) }} + {{ generated_dynamic_instances | default([]) }}'
   openstack.cloud.floating_ip:
     state: "{{ resource_state }}"

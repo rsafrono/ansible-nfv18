@@ -109,7 +109,7 @@
 
 - name: Gather Overcloud nodes data
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   openstack.cloud.server_info:
     auth: "{{ creds.stdout | from_yaml }}"
     # Required for SSL

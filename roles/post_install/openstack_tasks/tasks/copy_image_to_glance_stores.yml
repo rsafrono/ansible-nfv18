@@ -2,7 +2,7 @@
 
 - name: Retrieve Image Facts
   vars:
-    ansible_python_interpreter: "{{ venv_path }}/bin/python"
+    ansible_python_interpreter: "{{ python_interperter | default(venv_path + '/bin/python') }}"
   openstack.cloud.image_info:
     cloud: "{{ item.cloud_name | default(cloud_name) }}"
     image: "{{ image_id_or_name }}"
