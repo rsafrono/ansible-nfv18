@@ -1,0 +1,31 @@
+---
+- name: Get perf results from file
+  block:
+    - name: Get perf results for scenario
+      ansible.builtin.shell: set -o pipefail && grep \"tx_pps\" {{ binary_perf_log }} | awk 'END{ print int(substr($4, 1, length(    $4)-1) *2) }'
+      register: perf_results
+      failed_when: perf_results.rc != 0
+      changed_when: false
+
+    - ansible.builtin.debug:
+        msg: "Performance results: {{ perf_results.stdout }}"
+
+    - name: Set results fact
+      vars:
+        check_threshold: "{{ perf_results.stdout | int > report_junitxml_perf_result_threshold | int }}"
+      ansible.builtin.set_fact:
+        report_junitxml_perf_result_status: "{{ 'success' if check_threshold else 'failed' }}"
+        report_junitxml_failures: "{{ report_junitxml_failures if check_threshold else report_junitxml_failures + 1 }}"
+
+  rescue:
+    - name: Handle missing perf results
+      ansible.builtin.set_fact:
+        report_junitxml_perf_result_status: 'error'
+        report_junitxml_errors: "{{ report_junitxml_errors + 1 }}"
+
+  always:
+    - name: Template junitxml
+      ansible.builtin.template:
+        src: junit_template.j2
+        dest: "{{ report_junitxml_junitxml_output_path }}"
+        mode: '0644'

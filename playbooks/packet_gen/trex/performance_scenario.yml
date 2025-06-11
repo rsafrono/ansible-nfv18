@@ -153,3 +153,8 @@
       vars:
         set_pmd_auto_lb_improvement_threshold: "restore"
       when: pmd_auto_lb_improvement_threshold is defined
+
+- name: Generate JUnit XML report
+  hosts: localhost
+  roles:
+    - role: roles/report_junitxml

@@ -1,0 +1,4 @@
+report_junitxml_perf_result_threshold: "{{ 3500000 if dut_type == 'dpdk' else 28000000 }}"
+report_junitxml_failures: 0
+report_junitxml_errors: 0
+report_junitxml_junitxml_output_path: /var/lib/AnsibleTests/external_files/{{ dut_type }}_perf_results.xml
