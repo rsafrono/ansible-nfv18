@@ -26,14 +26,6 @@
     - pmd_lb is defined
     - pmd_lb in ['ovs', 'user']
 
-# TODO: (eshulman) this is a bad WA need to find a better one and remove it
-- name: Change dest port for trex
-  ansible.builtin.replace:
-    path: "{{ trafficgen_dir }}/trex-txrx.py"
-    regexp: '53'
-    replace: '5300'
-  become: true
-
 - name: Set Binary Search Command
   set_fact:
     traffic_cmd: >
@@ -42,6 +34,7 @@
       --max-loss-pct {{ trex_max_lost_pct }}
       --send-teaching-warmup
       --dst-macs {{ dut_macs }}
+      --dst-ports {{ dst_ports }}
       --num-flows {{ trex_flows }}
       {% if trex_set_vlan %}
         --vlan-ids {{ trex_vlans }}

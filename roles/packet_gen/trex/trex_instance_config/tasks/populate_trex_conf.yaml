@@ -37,7 +37,6 @@
           neutron port.
   when: trex_full_nic_info | length == 0
 
-
 - name: Sort Trex NICs Info Dict Based On PCI Slots
   set_fact:
     trex_full_nic_info: "{{ trex_full_nic_info | sort(attribute='pci_slot') }}"
