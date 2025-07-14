@@ -46,7 +46,7 @@
         state: mounted
 
     - name: Load Required Kernel Modules
-      modprobe:
+      community.general.modprobe:
         name: "{{ item['name'] }}"
         state: present
         params: "{{ item['params'] | default(omit) }}"
@@ -56,7 +56,7 @@
         - {'name': 'vfio-pci'}
 
     - name: Load Mellanox Kernel Modules when configured
-      modprobe:
+      community.general.modprobe:
         name: mlx5_core
         state: present
         persistent: "present"
