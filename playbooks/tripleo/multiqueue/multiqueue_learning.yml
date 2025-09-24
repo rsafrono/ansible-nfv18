@@ -164,9 +164,9 @@
       loop: "{{ testpmd_down_interfaces | default([]) }}"
 
 - hosts: trex
-  become: true
   pre_tasks:
     - name: save pmd_rxq_show_output to file
+      become: true
       copy:
         content: "{{ hostvars[dut_compute]['pmd_rxq_show_cmd_output'] }}"
         dest: "{{ pmd_rxq_show_output }}"
