@@ -66,6 +66,12 @@
       {% if binary_search_warmup_trial_runtime is defined %}
         --warmup-trial --warmup-trial-runtime {{ binary_search_warmup_trial_runtime }}
       {%- endif %}
+      {% if measure_latency is defined %}
+        --measure-latency {{ measure_latency }}
+      {%- endif %}
+      {% if latency_rate is defined %}
+        --latency-rate {{ latency_rate }}
+      {%- endif %}
   when: traffic_cmd is not defined
 
 - name: Load balance PMD before binary search starts (if requested)
